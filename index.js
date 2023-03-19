@@ -1,4 +1,7 @@
 const IP_ADDRESS_BULB = '192.168.1.75';
+const MIDI_INPUT_PORT = 0;
+const CHANNEL_NOTE_TYPE = 153; // Note ON
+const NOTE_NUMBER = 36; // Kick drum
 
 const dgram = require('dgram');
 const midi = require('midi');
@@ -10,12 +13,6 @@ const input = new midi.Input();
 
 setupUdpCallbacks();
 
-// Count the available input ports.
-input.getPortCount();
-
-// Get the name of a specified input port.
-input.getPortName(0);
-
 // Configure a callback.
 input.on('message', (deltaTime, message) => {
     // The message is an array of numbers corresponding to the MIDI bytes:
@@ -24,7 +21,7 @@ input.on('message', (deltaTime, message) => {
     // information interpreting the messages.
     console.log(`m: ${message} d: ${deltaTime}`);
     // Cycle through RGB colors each time Note On received for bass drum
-    if (message[0] === 153 && message[1] === 36) {
+    if (message[0] === CHANNEL_NOTE_TYPE && message[1] === NOTE_NUMBER) {
         count += 1;
         count %= 3;
         let colors = [0, 0, 0];
@@ -37,8 +34,8 @@ input.on('message', (deltaTime, message) => {
     }
 });
 
-// Open the first available input port.
-input.openPort(0);
+// Open the MIDI input port.
+input.openPort(MIDI_INPUT_PORT);
 
 input.ignoreTypes(false, false, false);
 
