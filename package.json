@@ -1,0 +1,14 @@
+{
+  "name": "wiz-realtime-midi",
+  "version": "0.0.1",
+  "description": "Make a Wiz smart bulb respond to live MIDI input events",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "DevPika",
+  "license": "MIT",
+  "dependencies": {
+    "midi": "^2.0.0"
+  }
+}
